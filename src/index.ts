@@ -1,4 +1,5 @@
 import {Hono } from "hono"
+import route from "./routes/product.route";
 
 
 const app= new Hono();
@@ -25,4 +26,6 @@ app.get("/health",(c)=>{
 })
 
 
+
+app.route("/products",route)
 export default app
