@@ -1,6 +1,25 @@
 import { Hono } from "hono";
+import { db } from "../configs/db";
+import {products}  from "../schema/product";
+
 
 const route = new Hono();
+
+
+// real db
+
+route.get("/", async(c) => {
+    const data= await db.select().from(products);
+    return c.json({
+        message: "products retrieved successfully",
+        data,
+    });
+    
+    
+});
+
+
+
 
 type product = {
   id: string;
@@ -12,12 +31,12 @@ const product: product[] = [
   { id: "2", name: "product 2" },
 ];
 
-route.get("/", (c) => {
-  return c.json({
-    message: "products retrieved successfully",
-    data: { product },
-  });
-});
+// route.get("/", (c) => {
+//   return c.json({
+//     message: "products retrieved successfully",
+//     data: { product },
+//   });
+// });
 
 route.get("/:id", (c) => {
   const prodId: string = c.req.param("id");
